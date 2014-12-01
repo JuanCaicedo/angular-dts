@@ -10,7 +10,7 @@ var Item = require('../models/Item.js').Item(db);
 /* GET all item listings. */
 router.get('/', function(req, res) {
     var criteria = {};
-    if (req.param('id')){
+    if (req.param('id')) {
         criteria['_id'] = req.param('id');
     }
 
@@ -37,13 +37,30 @@ router.post('/', function(req, res) {
 
 /* PUT update item listing. */
 router.put('/', function(req, res) {
-    Item.update(req.body, function(item) {
-        res.send(item);
-    }, function(error) {
-        res.json({
-            error: error
-        });
-
+    var inputItem = req.body;
+    Item.findOne({
+        _id: inputItem._id
+    }, function(error, item) {
+        if (error || !item) {
+            console.log('did not find a item');
+            res.json({
+                'error': error
+            });
+        } else {
+            item.name = inputItem.name;
+            item.description = inputItem.description;
+            item.save(function(error, item) {
+                if (error || !item) {
+                    console.log('error saving item');
+                    res.json({
+                        'error': error
+                    });
+                } else {
+                    console.log('saved item');
+                    res.send(item);
+                }
+            });
+        }
     });
 });
 
