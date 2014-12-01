@@ -9,7 +9,12 @@ var Item = require('../models/Item.js').Item(db);
 
 /* GET all item listings. */
 router.get('/', function(req, res) {
-    Item.find({}, function(error, items) {
+    var criteria = {};
+    if (req.param('id')){
+        criteria['_id'] = req.param('id');
+    }
+
+    Item.find(criteria, function(error, items) {
         res.send({
             items: items
         })
