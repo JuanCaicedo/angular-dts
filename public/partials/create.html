@@ -6,6 +6,7 @@
     name="createItemForm"
     ng-controller="createItemController"
     ng-submit="createItem(newItem)">
+    <h3 class="error-message"> {{statusMessage}} </h3>
     <div
         class="form-group">
         <label>name field</label>
