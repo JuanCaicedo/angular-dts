@@ -10,8 +10,8 @@ var Item = require('../models/Item.js').Item(db);
 /* GET all item listings. */
 router.get('/', function(req, res) {
     var criteria = {};
-    if (req.param('id')) {
-        criteria['_id'] = req.param('id');
+    if (req.param('_id')) {
+        criteria['_id'] = req.param('_id');
     }
 
     Item.find(criteria, function(error, items) {
@@ -42,7 +42,7 @@ router.put('/', function(req, res) {
         _id: inputItem._id
     }, function(error, item) {
         if (error || !item) {
-            console.log('did not find a item');
+            console.log('did not find an item');
             res.json({
                 'error': error
             });
@@ -66,13 +66,29 @@ router.put('/', function(req, res) {
 
 /* DELETE item listing. */
 router.delete('/', function(req, res) {
-    Item.delete(req.param('id'), function() {
-        res.send('successfully deleted item');
-    }, function(error) {
-        console.log('did not delete item');
-        res.json({
-            error: error
-        });
+    var inputItem = req.body;
+    console.log('inputItem ' + inputItem._id);
+    Item.findOne({
+        _id: inputItem._id
+    }, function(error, item) {
+        if (error || !item) {
+            console.log('did not find an item');
+            res.json({
+                'error': error
+            });
+        } else {
+            item.remove(function(error, item) {
+                if (error || !item) {
+                    console.log('error saving item');
+                    res.json({
+                        'error': error
+                    });
+                } else {
+                    console.log('saved item');
+                    res.send(item);
+                }
+            });
+        }
     });
 });
 
