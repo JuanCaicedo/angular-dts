@@ -6,33 +6,19 @@ angular.module('dry-forms', [
         '$urlRouterProvider',
         '$httpProvider',
         //Set up state provider
-        function($stateProvider, $urlRouterProvider, $httpProvider) {
+        function ($stateProvider, $urlRouterProvider, $httpProvider) {
             $urlRouterProvider.otherwise('/');
-            $stateProvider.
-            state('home', {
-                url: '/',
-                templateUrl: '/partials/home.html',
-                data: {
-                    pageTitle: 'Shortcut Junkie'
-                }
-            });
             $stateProvider
-                .state('shortcuts', {
-                    url: '/partials/shortcuts',
-                    templateUrl: '/partials/shortcutHome.html',
-                    controller: 'shortcutController',
-                    data: {
-                        pageTitle: 'Shortcuts Home'
-                    }
+                .state('item', {
+                    url: '/',
+                    templateUrl: '/partials/create.html'
+                    //controller: 'createController'
                 });
             $stateProvider
                 .state('search', {
-                    url: '/partials/search',
-                    templateUrl: '/partials/search.html',
-                    controller: 'searchController',
-                    data: {
-                        pageTitle: 'Search Shortcuts'
-                    }
+                    url: '/edit',
+                    templateUrl: '/partials/edit.html'
+                    //controller: 'searchController'
                 });
         }
     ]);
