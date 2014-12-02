@@ -11,14 +11,12 @@ angular.module('dry-forms', [
             $stateProvider
                 .state('item', {
                     url: '/',
-                    templateUrl: '/partials/create.html'
-                    //controller: 'createController'
+                    templateUrl: '/partials/createItem.html'
                 });
             $stateProvider
                 .state('search', {
                     url: '/edit',
-                    templateUrl: '/partials/edit.html'
-                    //controller: 'searchController'
+                    templateUrl: '/partials/editItem.html'
                 });
         }
     ]);
